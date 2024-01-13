@@ -28,4 +28,18 @@ kubectl edit svc argocd-server -n argocd
 (and change the type to NodePort from ClusterIP)
 
 8. Create application which points to this repo url
+
+
+
+
+![argocd1](https://github.com/Chitrakshi18/three-tier/assets/49672979/28cb66ab-1117-4b03-baf0-e2545ac38b11)
+
+
+
    
+![EBS-three-tier](https://github.com/Chitrakshi18/three-tier/assets/49672979/12e5cdac-abc4-433a-ac84-ce323e36ae49)
+
+
+![frontend-three-tier](https://github.com/Chitrakshi18/three-tier/assets/49672979/7640f051-ee9b-49ea-8b49-f9dbf4488d8f)
+
+
