@@ -29,6 +29,30 @@ kubectl edit svc argocd-server -n argocd
 
 8. Create application which points to this repo url
 
+9. To add observability of your cluster and send logs to cloud watch :
+  
+  1. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-prerequisites.html
+  attach this policy to your worker-node
+  
+  2. install the Amazon CloudWatch Observability EKS add-on(follow: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-addon.html)
+  aws iam attach-role-policy \
+--role-name <my-worker-node-role> \
+--policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy \
+--policy-arn arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+
+
+ to get role-name of your worker-node run
+  eksctl get nodegroup --cluster two-tier-app
+  -->ASG is nodegroup-name
+  aws eks describe-nodegroup --cluster-name two-tier-app --nodegroup-name ng-5dca75a6
+  aws eks describe-nodegroup --cluster-name two-tier-app --nodegroup-name ng-5dca75a6 | grep -A 1 "nodeRole"
+  
+  3. aws eks create-addon --cluster-name my-cluster-name --addon-name amazon-cloudwatch-observability
+  
+  4. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html
+  5. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html
+  6. kubectl get pods -n amazon-cloudwatch
+
 
 
 
@@ -43,3 +67,10 @@ kubectl edit svc argocd-server -n argocd
 ![frontend-three-tier](https://github.com/Chitrakshi18/three-tier/assets/49672979/7640f051-ee9b-49ea-8b49-f9dbf4488d8f)
 
 
+
+![cw](https://github.com/Chitrakshi18/EKS-three-tier-application/assets/49672979/3c3855b4-e909-4f07-a34c-0338c6fd6030)
+
+![fluentD](https://github.com/Chitrakshi18/EKS-three-tier-application/assets/49672979/ed43d1db-1e32-4a25-8112-02e22c6e5487)
+
+
+![logs](https://github.com/Chitrakshi18/EKS-three-tier-application/assets/49672979/affe18de-36b0-4b70-adda-7e149b373f31)
